@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/signup/signup",
+    "pages/venue/venue",
+    "pages/role/role"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "羽毛球活动报名",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#999999",
+    "selectedColor": "#007AFF",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/signup/signup",
+        "text": "报名"
+      },
+      {
+        "pagePath": "pages/venue/venue",
+        "text": "订场信息"
+      }
+    ]
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "usingComponents": {
+    "mp-icon": "weui-miniprogram/icon/icon"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

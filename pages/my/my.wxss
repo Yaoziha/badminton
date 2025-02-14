@@ -1,0 +1,13 @@
+.role-info {
+  display: flex;
+  align-items: center;
+}
+
+.role-text {
+  margin-right: 30rpx; /* 增加文字与修改按钮的间距 */
+}
+
+.edit-role {
+  margin-left: auto; /* 将修改角色推到右边 */
+  padding-left: 40rpx; /* 增加左侧间距 */
+} 

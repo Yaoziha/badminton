@@ -1,0 +1,53 @@
+.role-container {
+  padding: 30rpx;
+}
+
+.role-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30rpx;
+  padding: 20rpx;
+}
+
+.role-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-bottom: 16rpx;
+  border: 4rpx solid transparent;
+}
+
+.role-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.role-item.selected .avatar {
+  border-color: #007AFF;
+}
+
+.role-item.selected .role-name {
+  color: #007AFF;
+  font-weight: bold;
+}
+
+.confirm-btn {
+  width: 80%;
+  margin: 60rpx auto 0;
+  background-color: #007AFF;
+  color: #fff;
+}
