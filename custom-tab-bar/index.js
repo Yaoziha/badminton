@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: yaozihan
+ * @Date: 2025-02-14 15:32:39
+ * @LastEditors: yaozihan
+ * @LastEditTime: 2025-02-14 17:39:00
+ */
 Component({
   data: {
     selected: 0,
@@ -9,15 +17,15 @@ Component({
       iconPath: "/images/home.png",
       selectedIconPath: "/images/home-active.png"
     }, {
-      pagePath: "/pages/signup/signup",
-      text: "报名",
-      iconPath: "/images/signup.png",
-      selectedIconPath: "/images/signup-active.png"
-    }, {
       pagePath: "/pages/venue/venue",
       text: "订场信息",
       iconPath: "/images/venue.png",
       selectedIconPath: "/images/venue-active.png"
+    }, {
+      pagePath: "/pages/signup/signup",
+      text: "报名",
+      iconPath: "/images/signup.png",
+      selectedIconPath: "/images/signup-active.png"
     }]
   },
   methods: {

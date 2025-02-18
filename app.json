@@ -19,15 +19,21 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/signup/signup",
-        "text": "报名"
+        "text": "首页",
+        "iconPath": "images/tabbar/home.png",
+        "selectedIconPath": "images/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/venue/venue",
-        "text": "订场信息"
+        "text": "订场信息",
+        "iconPath": "images/tabbar/venue.png",
+        "selectedIconPath": "images/tabbar/venue-active.png"
+      },
+      {
+        "pagePath": "pages/signup/signup",
+        "text": "报名",
+        "iconPath": "images/tabbar/signup.png",
+        "selectedIconPath": "images/tabbar/signup-active.png"
       }
     ]
   },
