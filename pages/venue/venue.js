@@ -4,9 +4,11 @@
  * @Author: yaozihan
  * @Date: 2025-02-14 15:21:39
  * @LastEditors: yaozihan
- * @LastEditTime: 2025-02-14 16:02:46
+ * @LastEditTime: 2025-02-18 11:57:59
  */
 const app = getApp()
+const { getCurrentWeekInfo, getWeekNumber } = require('../../utils/date.js')
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -43,13 +45,22 @@ Page({
   },
 
   checkVenueInfo() {
-    const venueInfo = wx.getStorageSync('venueInfo')
-    if (venueInfo) {
-      this.setData({
-        hasVenueInfo: true,
-        venueInfo
+    const { weekNumber, year } = getCurrentWeekInfo()
+
+    db.collection('badmintonVenues')
+      .where({
+        weekNumber,
+        year
       })
-    }
+      .get()
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setData({
+            hasVenueInfo: true,
+            venueInfo: res.data[0]
+          })
+        }
+      })
   },
 
   startEdit() {
@@ -97,50 +108,53 @@ Page({
       return
     }
 
-    const venueInfo = { location, date, startTime, endTime, remarks }
-    
-    // 保存到全局数据和本地存储
-    app.globalData.venueInfo = venueInfo
-    wx.setStorageSync('venueInfo', venueInfo)
-
-    this.setData({
-      hasVenueInfo: true,
-      venueInfo
-    })
-
-    wx.showToast({
-      title: '保存成功',
-      icon: 'success'
+    // 添加到云数据库
+    db.collection('badmintonVenues').add({
+      data: {
+        location,
+        date,
+        startTime,
+        endTime,
+        remarks,
+        weekNumber: getWeekNumber(new Date(date)),
+        year: new Date(date).getFullYear(),
+        createdAt: db.serverDate()
+      }
+    }).then(() => {
+      this.setData({
+        hasVenueInfo: true,
+        venueInfo: { location, date, startTime, endTime, remarks }
+      })
+      wx.showToast({
+        title: '保存成功',
+        icon: 'success'
+      })
+    }).catch(err => {
+      wx.showToast({
+        title: '保存失败',
+        icon: 'none'
+      })
     })
   },
 
   deleteVenueInfo() {
-    wx.showModal({
-      title: '确认删除',
-      content: '确定要删除本周订场信息吗？',
-      success: (res) => {
-        if (res.confirm) {
-          // 清除订场信息
-          app.globalData.venueInfo = null
-          wx.removeStorageSync('venueInfo')
-          
-          // 更新页面状态
-          this.setData({
-            hasVenueInfo: false,
-            venueInfo: null,
-            location: '巡司河体育公园',
-            date: '',
-            startTime: '',
-            endTime: '',
-            remarks: ''
-          })
+    const { weekNumber, year } = getCurrentWeekInfo()
 
-          wx.showToast({
-            title: '已删除订场信息',
-            icon: 'success'
-          })
-        }
-      }
-    })
+    db.collection('badmintonVenues')
+      .where({
+        weekNumber,
+        year
+      })
+      .remove()
+      .then(() => {
+        this.setData({
+          hasVenueInfo: false,
+          venueInfo: null
+        })
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success'
+        })
+      })
   }
 }) 

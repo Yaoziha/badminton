@@ -1,4 +1,6 @@
 const app = getApp()
+const { getCurrentWeekInfo } = require('../../utils/date.js')
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -22,11 +24,21 @@ Page({
   // 检查报名状态
   checkSignupStatus() {
     const currentRole = app.globalData.role
-    const participants = app.globalData.participants || []
-    const hasSignedUp = participants.some(p => p.name === currentRole)
-    this.setData({
-      hasSignedUp
-    })
+    const currentWeek = this.getWeekNumber(new Date())
+    const currentYear = new Date().getFullYear()
+
+    db.collection('badmintonSignups')
+      .where({
+        role: currentRole,
+        weekNumber: currentWeek,
+        year: currentYear
+      })
+      .get()
+      .then(res => {
+        this.setData({
+          hasSignedUp: res.data.length > 0
+        })
+      })
   },
 
   // 报名
@@ -40,62 +52,53 @@ Page({
       return
     }
 
-    const participants = app.globalData.participants || []
-    if (participants.some(p => p.name === currentRole)) {
-      wx.showToast({
-        title: '您已经报名了',
-        icon: 'none'
+    const { weekNumber, year } = getCurrentWeekInfo()
+
+    db.collection('badmintonSignups').add({
+      data: {
+        role: currentRole,
+        weekNumber,
+        year,
+        createdAt: db.serverDate()
+      }
+    }).then(() => {
+      this.setData({
+        hasSignedUp: true
       })
-      return
-    }
-
-    // 添加报名信息
-    participants.push({
-      name: currentRole,
-      timestamp: new Date().getTime()
-    })
-
-    // 更新全局数据
-    app.globalData.participants = participants
-    // 更新存储
-    wx.setStorageSync('participants', participants)
-
-    this.setData({
-      hasSignedUp: true
-    })
-
-    wx.showToast({
-      title: '报名成功',
-      icon: 'success'
+      wx.showToast({
+        title: '报名成功',
+        icon: 'success'
+      })
     })
   },
 
   // 取消报名
   cancelSignup() {
-    wx.showModal({
-      title: '确认取消',
-      content: '确定要取消报名吗？',
-      success: (res) => {
-        if (res.confirm) {
-          const currentRole = app.globalData.role
-          const participants = app.globalData.participants || []
-          const newParticipants = participants.filter(p => p.name !== currentRole)
-          
-          // 更新全局数据
-          app.globalData.participants = newParticipants
-          // 更新存储
-          wx.setStorageSync('participants', newParticipants)
+    const currentRole = app.globalData.role
+    const currentWeek = this.getWeekNumber(new Date())
+    const currentYear = new Date().getFullYear()
 
-          this.setData({
-            hasSignedUp: false
-          })
+    db.collection('badmintonSignups')
+      .where({
+        role: currentRole,
+        weekNumber: currentWeek,
+        year: currentYear
+      })
+      .remove()
+      .then(() => {
+        this.setData({
+          hasSignedUp: false
+        })
+        wx.showToast({
+          title: '取消成功',
+          icon: 'success'
+        })
+      })
+  },
 
-          wx.showToast({
-            title: '已取消报名',
-            icon: 'success'
-          })
-        }
-      }
-    })
+  getWeekNumber(date) {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
   }
 }) 

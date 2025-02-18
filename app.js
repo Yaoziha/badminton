@@ -4,28 +4,30 @@
  * @Author: yaozihan
  * @Date: 2025-02-14 15:03:42
  * @LastEditors: yaozihan
- * @LastEditTime: 2025-02-14 15:37:30
+ * @LastEditTime: 2025-02-18 11:53:17
  */
 // app.js
 App({
-  globalData: {
-    userInfo: null,
-    role: null,
-    hasLogin: false,
-    participants: [],
-    venueInfo: null
-  },
+  onLaunch: function() {
+    console.error('初始化成功！！！！！！！！！')
+    
+    // 初始化云开发
+    if (!wx.cloud) {
+      console.error('请使用 2.2.3 或以上的基础库以使用云能力')
+    } else {
+      wx.cloud.init({
+        env: 'yzh-0gc3evaze3e2ac32',  // 你的云环境ID
+        traceUser: true
+      })
+    }
 
-  onLaunch() {
-    // 只检查角色信息
+    // 检查角色信息
     const role = wx.getStorageSync('role')
     
     if (role) {
-      // 如果已有角色信息，说明已经完成了基本设置
       this.globalData.role = role
       this.globalData.hasLogin = true
     } else {
-      // 如果没有角色信息，跳转到角色选择页面
       wx.redirectTo({
         url: '/pages/role/role'
       })
@@ -37,5 +39,13 @@ App({
     
     const venueInfo = wx.getStorageSync('venueInfo')
     this.globalData.venueInfo = venueInfo
+  },
+
+  globalData: {
+    userInfo: null,
+    role: null,
+    hasLogin: false,
+    participants: [],
+    venueInfo: null
   }
 })

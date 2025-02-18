@@ -3,14 +3,14 @@ const app = getApp()
 Page({
   data: {
     fixedRoles: [
-      { name: '姚老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=姚老师' },
-      { name: '王老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=王老师' },
-      { name: '丁哥', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=丁哥' },
-      { name: '马老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=马老师' },
-      { name: '戴哥', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=戴哥' },
-      { name: '龙总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=龙总' },
-      { name: '齐总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=齐总' },
-      { name: '王总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=王总' },
+      { name: '姚老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=姚老师&gender=male' },
+      { name: '王老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=王老师&gender=female' },
+      { name: '丁哥', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=丁哥&gender=male' },
+      { name: '马老师', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=马老师&gender=female' },
+      { name: '戴哥', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=戴哥&gender=male' },
+      { name: '龙总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=龙总&gender=male' },
+      { name: '齐总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=齐总&gender=female' },
+      { name: '王总', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=王总&gender=male' },
       { name: '其他', avatar: 'https://api.dicebear.com/7.x/adventurer/svg?seed=other' }
     ],
     selectedRole: '',

@@ -1,6 +1,8 @@
 // index.js
 const app = getApp()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const { getCurrentWeekInfo } = require('../../utils/date.js')
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -145,36 +147,42 @@ Page({
     })
   },
   getLocalSignupInfo() {
-    const participants = app.globalData.participants || [];
-    const userInfo = wx.getStorageSync('userInfo');
-    
-    if (participants.length > 0) {
-      const signupList = participants.map(participant => ({
-        avatarUrl: userInfo ? userInfo.avatarUrl : '',
-        role: participant.name
-      }));
-      
-      this.setData({
-        currentWeekSignups: signupList
-      });
-    } else {
-      // 如果没有报名信息，清空列表
-      this.setData({
-        currentWeekSignups: []
-      });
-    }
+    const currentWeek = this.getWeekNumber(new Date())
+    const currentYear = new Date().getFullYear()
+
+    db.collection('badmintonSignups')
+      .where({
+        weekNumber: currentWeek,
+        year: currentYear
+      })
+      .get()
+      .then(res => {
+        this.setData({
+          currentWeekSignups: res.data.map(item => ({
+            role: item.role
+          }))
+        })
+      })
   },
   // 添加获取订场信息的方法
   getVenueInfo() {
-    const venueInfo = wx.getStorageSync('venueInfo');
-    if (venueInfo) {
-      this.setData({
-        venueInfo: venueInfo
-      });
-    } else {
-      this.setData({
-        venueInfo: null
-      });
-    }
+    const { weekNumber, year } = getCurrentWeekInfo()
+
+    db.collection('badmintonVenues')
+      .where({
+        weekNumber,
+        year
+      })
+      .get()
+      .then(res => {
+        this.setData({
+          venueInfo: res.data[0] || null
+        })
+      })
+  },
+  getWeekNumber(date) {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
   }
 })
