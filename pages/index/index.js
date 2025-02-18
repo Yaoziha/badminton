@@ -1,7 +1,7 @@
 // index.js
 const app = getApp()
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
-const { getCurrentWeekInfo } = require('../../utils/date.js')
+const { getCurrentWeekInfo,getWeekNumber } = require('../../utils/date.js')
 const db = wx.cloud.database()
 
 Page({
@@ -147,7 +147,7 @@ Page({
     })
   },
   getLocalSignupInfo() {
-    const currentWeek = this.getWeekNumber(new Date())
+    const currentWeek = getWeekNumber(new Date())
     const currentYear = new Date().getFullYear()
 
     db.collection('badmintonSignups')
@@ -167,7 +167,6 @@ Page({
   // 添加获取订场信息的方法
   getVenueInfo() {
     const { weekNumber, year } = getCurrentWeekInfo()
-
     db.collection('badmintonVenues')
       .where({
         weekNumber,
@@ -180,9 +179,9 @@ Page({
         })
       })
   },
-  getWeekNumber(date) {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-  }
+  // getWeekNumber(date) {
+  //   const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  //   const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+  //   return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  // }
 })

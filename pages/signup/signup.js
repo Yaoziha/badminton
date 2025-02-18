@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: yaozihan
+ * @Date: 2025-02-14 15:20:24
+ * @LastEditors: yaozihan
+ * @LastEditTime: 2025-02-18 15:38:41
+ */
 const app = getApp()
 const { getCurrentWeekInfo } = require('../../utils/date.js')
 const db = wx.cloud.database()
@@ -24,8 +32,7 @@ Page({
   // 检查报名状态
   checkSignupStatus() {
     const currentRole = app.globalData.role
-    const currentWeek = this.getWeekNumber(new Date())
-    const currentYear = new Date().getFullYear()
+    const { weekNumber: currentWeek, year: currentYear } = getCurrentWeekInfo()
 
     db.collection('badmintonSignups')
       .where({
@@ -75,8 +82,7 @@ Page({
   // 取消报名
   cancelSignup() {
     const currentRole = app.globalData.role
-    const currentWeek = this.getWeekNumber(new Date())
-    const currentYear = new Date().getFullYear()
+    const { weekNumber: currentWeek, year: currentYear } = getCurrentWeekInfo()
 
     db.collection('badmintonSignups')
       .where({
@@ -94,11 +100,5 @@ Page({
           icon: 'success'
         })
       })
-  },
-
-  getWeekNumber(date) {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
   }
 }) 

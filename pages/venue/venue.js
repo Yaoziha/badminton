@@ -4,7 +4,7 @@
  * @Author: yaozihan
  * @Date: 2025-02-14 15:21:39
  * @LastEditors: yaozihan
- * @LastEditTime: 2025-02-18 11:57:59
+ * @LastEditTime: 2025-02-18 15:51:38
  */
 const app = getApp()
 const { getCurrentWeekInfo, getWeekNumber } = require('../../utils/date.js')
@@ -108,33 +108,62 @@ Page({
       return
     }
 
-    // 添加到云数据库
-    db.collection('badmintonVenues').add({
-      data: {
-        location,
-        date,
-        startTime,
-        endTime,
-        remarks,
-        weekNumber: getWeekNumber(new Date(date)),
-        year: new Date(date).getFullYear(),
-        createdAt: db.serverDate()
-      }
-    }).then(() => {
-      this.setData({
-        hasVenueInfo: true,
-        venueInfo: { location, date, startTime, endTime, remarks }
+    const { weekNumber, year } = getCurrentWeekInfo()
+
+    // 先查询是否已存在本周的场地信息
+    db.collection('badmintonVenues')
+      .where({
+        weekNumber,
+        year
       })
-      wx.showToast({
-        title: '保存成功',
-        icon: 'success'
+      .get()
+      .then(res => {
+        if (res.data.length > 0) {
+          // 如果存在，则更新
+          return db.collection('badmintonVenues').doc(res.data[0]._id).update({
+            data: {
+              location,
+              date,
+              startTime,
+              endTime,
+              remarks,
+              weekNumber: getWeekNumber(new Date(date)),
+              year: new Date(date).getFullYear(),
+              updatedAt: db.serverDate()
+            }
+          })
+        } else {
+          // 如果不存在，则新增
+          return db.collection('badmintonVenues').add({
+            data: {
+              location,
+              date,
+              startTime,
+              endTime,
+              remarks,
+              weekNumber: getWeekNumber(new Date(date)),
+              year: new Date(date).getFullYear(),
+              createdAt: db.serverDate()
+            }
+          })
+        }
       })
-    }).catch(err => {
-      wx.showToast({
-        title: '保存失败',
-        icon: 'none'
+      .then(() => {
+        this.setData({
+          hasVenueInfo: true,
+          venueInfo: { location, date, startTime, endTime, remarks }
+        })
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        })
       })
-    })
+      .catch(err => {
+        wx.showToast({
+          title: '保存失败',
+          icon: 'none'
+        })
+      })
   },
 
   deleteVenueInfo() {

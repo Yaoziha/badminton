@@ -9,7 +9,6 @@
 // app.js
 App({
   onLaunch: function() {
-    console.error('初始化成功！！！！！！！！！')
     
     // 初始化云开发
     if (!wx.cloud) {

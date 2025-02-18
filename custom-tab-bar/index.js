@@ -14,18 +14,23 @@ Component({
     list: [{
       pagePath: "/pages/index/index",
       text: "首页",
-      iconPath: "/images/home.png",
-      selectedIconPath: "/images/home-active.png"
+      iconPath: "/images/tabbar/home.png",
+      selectedIconPath: "/images/tabbar/home-active.png"
     }, {
       pagePath: "/pages/venue/venue",
       text: "订场信息",
-      iconPath: "/images/venue.png",
-      selectedIconPath: "/images/venue-active.png"
+      iconPath: "/images/tabbar/venue.png",
+      selectedIconPath: "/images/tabbar/venue-active.png"
     }, {
       pagePath: "/pages/signup/signup",
       text: "报名",
-      iconPath: "/images/signup.png",
-      selectedIconPath: "/images/signup-active.png"
+      iconPath: "/images/tabbar/signup.png",
+      selectedIconPath: "/images/tabbar/signup-active.png"
+    }, {
+      pagePath: "/pages/history/history",
+      text: "历史",
+      iconPath: "/images/tabbar/calendar.png",
+      selectedIconPath: "/images/tabbar/calendar-active.png"
     }]
   },
   methods: {

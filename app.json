@@ -3,12 +3,13 @@
     "pages/index/index",
     "pages/signup/signup",
     "pages/venue/venue",
-    "pages/role/role"
+    "pages/role/role",
+    "pages/history/history"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "羽毛球活动报名",
+    "navigationBarTitleText": "大学生活动中心羽毛球活动报名",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -34,6 +35,12 @@
         "text": "报名",
         "iconPath": "images/tabbar/signup.png",
         "selectedIconPath": "images/tabbar/signup-active.png"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "历史",
+        "iconPath": "images/tabbar/calendar.png",
+        "selectedIconPath": "images/tabbar/calendar-active.png"
       }
     ]
   },
