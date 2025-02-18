@@ -5,29 +5,44 @@
 
 .history-item {
   background: #fff;
-  border-radius: 12rpx;
+  border-radius: 16rpx;
   padding: 24rpx;
-  margin-bottom: 24rpx;
+  margin: 24rpx;
+  box-shadow: var(--card-shadow);
+  animation: slideUp 0.3s ease;
+  transition: var(--transition-normal);
 }
 
 .week-header {
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 16rpx;
-  color: #333;
+  background: linear-gradient(135deg, #007AFF, #0056b3);
+  color: #fff;
+  padding: 16rpx 24rpx;
+  border-radius: 12rpx;
+  margin: -24rpx -24rpx 24rpx -24rpx;
 }
 
 .venue-info {
-  display: flex;
-  flex-direction: column;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  margin: 16rpx 0;
+}
+
+.venue-location {
   font-size: 28rpx;
-  color: #666;
-  margin-bottom: 16rpx;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.venue-time {
+  font-size: 28rpx;
+  color: #333;
 }
 
 .signup-list {
-  border-top: 1rpx solid #eee;
-  padding-top: 16rpx;
+  padding: 16rpx;
+  background: #fff;
+  border-radius: 12rpx;
 }
 
 .signup-title {
@@ -37,7 +52,13 @@
 }
 
 .signup-item {
-  font-size: 28rpx;
-  color: #666;
-  padding: 8rpx 0;
+  padding: 12rpx 16rpx;
+  margin: 8rpx 0;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  transition: var(--transition-normal);
+}
+
+.signup-item:active {
+  transform: translateX(10rpx);
 } 

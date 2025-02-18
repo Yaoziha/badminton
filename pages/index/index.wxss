@@ -68,29 +68,40 @@ page {
 
 /* 角色信息行 */
 .header-row {
-  background: #fff;
-  padding: 16rpx 20rpx;
-  border-radius: 12rpx;
-  margin-bottom: 12rpx;
+  background: linear-gradient(135deg, #3b90ff, #6eb4ff);
+  padding: 30rpx 24rpx;
+  border-radius: 16rpx;
+  margin: 24rpx;
+  box-shadow: var(--card-shadow);
+  color: #fff;
 }
 
 .role-info {
+  animation: slideUp 0.3s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16rpx 0;
 }
 
 .role-name {
   font-size: 32rpx;
   font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .change-role {
-  color: #007AFF;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
   font-size: 28rpx;
+  color: #fff;
   margin-left: 40rpx;
-  padding-left: 40rpx;
+  transition: var(--transition-normal);
+}
+
+.change-role:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
 }
 
 .edit-icon {
@@ -101,10 +112,13 @@ page {
 
 /* 场地信息行 */
 .venue-brief {
+  margin: 24rpx;
+  padding: 24rpx;
   background: #fff;
-  padding: 16rpx 20rpx;
-  border-radius: 12rpx;
-  margin-bottom: 12rpx;
+  border-radius: 16rpx;
+  box-shadow: var(--card-shadow);
+  transform-origin: center;
+  transition: var(--transition-normal);
 }
 
 .venue-status {
@@ -114,9 +128,8 @@ page {
 
 /* 报名名单区域 */
 .signup-section {
-  background: #fff;
-  padding: 16rpx 20rpx;
-  border-radius: 12rpx;
+  margin: 24rpx;
+  animation: fadeIn 0.4s ease;
 }
 
 .section-title {
@@ -127,7 +140,22 @@ page {
 }
 
 .signup-list {
-  padding: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.signup-item {
+  padding: 20rpx;
+  margin: 16rpx 0;
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: var(--card-shadow);
+  transform-origin: center;
+  transition: var(--transition-normal);
+}
+
+.signup-item:active {
+  transform: scale(0.98);
 }
 
 .list-item {
